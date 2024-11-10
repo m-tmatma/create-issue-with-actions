@@ -31,7 +31,7 @@ jobs:
         run: echo "Deploying to ${{ github.event.inputs.environment }} with version ${{ github.event.inputs.deploy_version }}"
 
       - name: create issue
-        run: gh issue create --title "Issue title" --body "${{ github.event.inputs.deploy_version }}"
+        run: gh issue create --title "Issue title" --body "${{ github.event.inputs.deploy_version }}" -a "${{ github.actor }}"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
