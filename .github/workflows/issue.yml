@@ -1,0 +1,35 @@
+# This is a basic workflow to help you get started with Actions
+
+name: issue
+
+# Controls when the workflow will run
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - development
+          - staging
+          - production
+      deploy_version:
+        description: 'Version to deploy'
+        required: false
+        default: 'latest'
+        
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy
+        run: echo "Deploying to ${{ github.event.inputs.environment }} with version ${{ github.event.inputs.deploy_version }}"
+
+      - name: create issue
+        run: gh issue create --title "Issue title" --body "${{ github.event.inputs.deploy_version }}"
+
